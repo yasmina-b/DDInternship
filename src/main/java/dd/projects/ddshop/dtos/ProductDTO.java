@@ -1,6 +1,7 @@
 package dd.projects.ddshop.dtos;
 
 import dd.projects.ddshop.entities.Category;
+import dd.projects.ddshop.entities.Subcategory;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import java.util.List;
@@ -13,5 +14,5 @@ public class ProductDTO {
 
     private String description;
 
-    private int subcategoryId;
+    private Subcategory subcategoryId;
 }

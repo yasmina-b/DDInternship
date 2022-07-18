@@ -15,22 +15,22 @@ public class UserOrderService {
     public UserOrderService (UserOrderRepository userOrderRepository){
         this.userOrderRepository = userOrderRepository;
     }
-    public void createOrder (UserOrder userOrder) {
+    public void createUserOrder (UserOrder userOrder) {
         userOrderRepository.save(userOrder);
     }
 
-    public List<UserOrder> getOrder() {
+    public List<UserOrder> getUserOrder() {
         return userOrderRepository.findAll();
     }
 
-    public void updateOrder (int orderId, UserOrder newOrder) {
+    public void updateUserOrder (int orderId, UserOrder newOrder) {
         UserOrder order = userOrderRepository.findById(orderId).get();
         order.setOrderDate(newOrder.getOrderDate());
         order.setTotalPrice(newOrder.getTotalPrice());
         order.setPaymentType(newOrder.getPaymentType());
         userOrderRepository.save(order);
     }
-    public void deleteOrderById (int id) {
+    public void deleteUserOrderById (int id) {
         userOrderRepository.deleteById(id);
     }
 }
