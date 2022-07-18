@@ -27,13 +27,13 @@ public class ProductController {
     }
 
     @GetMapping("/getProduct")
-    public ResponseEntity<List<Product>> getProduct() {
+    public ResponseEntity<List<ProductDTO>> getProduct() {
         return new ResponseEntity<>(productService.getProduct(), HttpStatus.OK);
     }
 
     @PostMapping("/createProduct")
     public ResponseEntity<Object> addProduct(@RequestBody ProductDTO productDto) {
-        Optional<Subcategory> optionalSubcategory = subcategoryService.readSubcategory(productDto.getSubcategoryId());
+        Optional<Subcategory> optionalSubcategory = subcategoryService.readSubcategory(productDto.getSubcategoryId().getId());
         Subcategory subcategory = optionalSubcategory.get();
         productService.createProduct(productDto, subcategory);
         return new ResponseEntity<>("", HttpStatus.CREATED);
