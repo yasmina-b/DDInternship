@@ -7,7 +7,15 @@ import lombok.Data;
 @AllArgsConstructor
 public class CartEntryDTO {
 
-    public int quantity;
+    private int quantity;
+
+    private double pricePerPiece;
+
+    private double totalPricePerEntry;
+
+    private int variantId;
+
+    private int cartId;
 
 
 }

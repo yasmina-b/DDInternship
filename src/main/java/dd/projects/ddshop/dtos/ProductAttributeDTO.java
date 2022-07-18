@@ -3,14 +3,13 @@ package dd.projects.ddshop.dtos;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
-public class ProductDTO {
+public class ProductAttributeDTO {
 
     private String name;
 
-    private String description;
-
-    private SubcategoryDTO subcategoryId;
-
+    private List <AttributeValueDTO> attributeValue;
 }
