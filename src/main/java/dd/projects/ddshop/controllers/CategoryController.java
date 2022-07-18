@@ -1,6 +1,7 @@
 package dd.projects.ddshop.controllers;
 
 
+import dd.projects.ddshop.dtos.CategoryDTO;
 import dd.projects.ddshop.entities.Category;
 import dd.projects.ddshop.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class CategoryController {
     }
 
     @GetMapping("/getCategory")
-    public ResponseEntity<List<Category>> getCategory() {
+    public ResponseEntity<List<CategoryDTO>> getCategory() {
         return new ResponseEntity<>(categoryService.getCategory(), HttpStatus.OK);
     }
 

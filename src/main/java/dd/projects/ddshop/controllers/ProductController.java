@@ -1,8 +1,11 @@
 package dd.projects.ddshop.controllers;
 
 import dd.projects.ddshop.dtos.ProductDTO;
+import dd.projects.ddshop.dtos.SubcategoryDTO;
 import dd.projects.ddshop.entities.Product;
 import dd.projects.ddshop.entities.Subcategory;
+import dd.projects.ddshop.mappers.SubcategoryDtoMapper;
+import dd.projects.ddshop.mappers.SubcategoryMapper;
 import dd.projects.ddshop.services.ProductService;
 import dd.projects.ddshop.services.SubcategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +36,7 @@ public class ProductController {
 
     @PostMapping("/createProduct")
     public ResponseEntity<Object> addProduct(@RequestBody ProductDTO productDto) {
-        Optional<Subcategory> optionalSubcategory = subcategoryService.readSubcategory(productDto.getSubcategoryId().getId());
+        Optional<Subcategory> optionalSubcategory = subcategoryService.readSubcategory(SubcategoryDtoMapper.trans(productDto.getSubcategoryId()).getId());
         Subcategory subcategory = optionalSubcategory.get();
         productService.createProduct(productDto, subcategory);
         return new ResponseEntity<>("", HttpStatus.CREATED);

@@ -19,6 +19,6 @@ public class Category {
     public String name;
 
     @OneToMany (mappedBy = "categoryId")
-    public List <Subcategory> subcategory;
+    public List<Subcategory> subcategory;
 
 }

@@ -1,5 +1,6 @@
 package dd.projects.ddshop.entities;
 
+import dd.projects.ddshop.dtos.SubcategoryDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,7 +22,7 @@ public class Product {
     @Column(name = "description", length = 256, nullable = false)
     public String description;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "subcategory_id")
     public Subcategory subcategoryId;
 

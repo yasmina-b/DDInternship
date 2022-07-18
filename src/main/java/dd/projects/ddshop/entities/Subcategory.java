@@ -20,8 +20,11 @@ public class Subcategory {
   public String name;
 
   @ManyToOne
-  @JoinColumn(name = "category_id")
+  @JoinColumn(name = "category_id", referencedColumnName = "id")
   public Category categoryId;
+
+  @OneToMany (mappedBy = "subcategoryId")
+  public List<Product> products;
 
   @ManyToMany(cascade = CascadeType.ALL)
   @JoinTable(name = "subcategory_product_attribute",
