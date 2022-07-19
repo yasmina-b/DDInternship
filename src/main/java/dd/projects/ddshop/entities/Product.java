@@ -2,14 +2,17 @@ package dd.projects.ddshop.entities;
 
 import dd.projects.ddshop.dtos.SubcategoryDTO;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 @Getter
 @Setter
 @Entity
 @Table(name="product")
+@NoArgsConstructor
 public class Product {
 
     @Id
@@ -29,4 +32,10 @@ public class Product {
     @OneToMany (mappedBy = "productId")
     public List<Variant> variant;
 
+    public Product(String name, String description, Subcategory subcategory) {
+        this.name = name;
+        this.description = description;
+        this.subcategoryId = subcategory;
+        this.variant = new ArrayList<>();
+    }
 }

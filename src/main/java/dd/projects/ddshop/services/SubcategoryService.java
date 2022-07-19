@@ -8,6 +8,7 @@ import dd.projects.ddshop.repositories.SubcategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +28,8 @@ public class SubcategoryService {
         Subcategory subcategory = new Subcategory();
         subcategory.setName(subcategoryDTO.getName());
         subcategory.setCategoryId(category);
+        subcategory.setProducts(new ArrayList<>());
+        subcategory.setProductAttributes(new ArrayList<>());
         return subcategory;
 
     }
@@ -43,8 +46,8 @@ public class SubcategoryService {
                 .collect(toList());
     }
 
-    public Optional<Subcategory> readSubcategory(Integer subcategoryId) {
-        return subcategoryRepository.findById(subcategoryId);
+    public Subcategory readSubcategory(Integer subcategoryId) {
+        return subcategoryRepository.getReferenceById(subcategoryId);
     }
 
     public void updateSubcategory (int subcategoryId, Subcategory newSubcategory) {

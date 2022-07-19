@@ -6,7 +6,6 @@ import org.mapstruct.Mapper;
 
 @Mapper
 public class UserCreationMapper {
-
     public User sourceToDestination(UserCreationDTO userCreationDto) {
         User user = new User();
         user.setFirstName(userCreationDto.getFirstName());

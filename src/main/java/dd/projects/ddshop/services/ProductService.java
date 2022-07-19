@@ -26,10 +26,7 @@ public class ProductService{
     }
 
     public static Product getProductFromDTO(ProductDTO productDto, Subcategory subcategory) {
-        Product product = new Product();
-        product.setName(productDto.getName());
-        product.setDescription(productDto.getDescription());
-        product.setSubcategoryId(subcategory);
+        Product product = new Product(productDto.getName(),productDto.getDescription(),subcategory);
         return product;
     }
     public Optional<Product> readProduct(Integer productId) {

@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SubcategoryMapper {
-
     public static SubcategoryDTO trans(Subcategory subcategory) {
         return new SubcategoryDTO(subcategory.getName(),subcategory.getCategoryId().getId());
     }

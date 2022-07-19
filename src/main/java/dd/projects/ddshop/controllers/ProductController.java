@@ -36,8 +36,7 @@ public class ProductController {
 
     @PostMapping("/createProduct")
     public ResponseEntity<Object> addProduct(@RequestBody ProductDTO productDto) {
-        Optional<Subcategory> optionalSubcategory = subcategoryService.readSubcategory(SubcategoryDtoMapper.trans(productDto.getSubcategoryId()).getId());
-        Subcategory subcategory = optionalSubcategory.get();
+        Subcategory subcategory = subcategoryService.readSubcategory(productDto.getSubcategoryId().getCategoryId());
         productService.createProduct(productDto, subcategory);
         return new ResponseEntity<>("", HttpStatus.CREATED);
     }

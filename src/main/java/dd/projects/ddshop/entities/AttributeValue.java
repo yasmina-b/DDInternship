@@ -1,6 +1,7 @@
 package dd.projects.ddshop.entities;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name="attribute_value")
+@NoArgsConstructor
 public class AttributeValue {
 
     @Id
@@ -21,5 +23,9 @@ public class AttributeValue {
     @JoinColumn(name = "product_attribute_id")
     public ProductAttribute productAttributeId;
 
+    public AttributeValue(String attribute, ProductAttribute productAttribute) {
+        this.value = attribute;
+        this.productAttributeId = productAttribute;
+    }
 }
 

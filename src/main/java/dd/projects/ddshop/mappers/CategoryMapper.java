@@ -1,9 +1,7 @@
 package dd.projects.ddshop.mappers;
-
 import dd.projects.ddshop.dtos.CategoryDTO;
 import dd.projects.ddshop.dtos.SubcategoryDTO;
 import dd.projects.ddshop.entities.Category;
-import dd.projects.ddshop.entities.Subcategory;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
