@@ -26,11 +26,6 @@ public class Subcategory {
   @OneToMany (mappedBy = "subcategoryId")
   public List<Product> products;
 
-  @ManyToMany(cascade = CascadeType.ALL)
-  @JoinTable(name = "subcategory_product_attribute",
-          joinColumns = @JoinColumn(name = "subcategory_id", referencedColumnName = "id"),
-          inverseJoinColumns = @JoinColumn(name = "product_attribute_id",
-                  referencedColumnName = "id"))
-  private List<ProductAttribute> productAttributeList;
-
+  @ManyToMany(mappedBy = "subcategories", cascade = CascadeType.ALL)
+  public List <ProductAttribute> productAttributes;
 }

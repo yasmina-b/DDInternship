@@ -5,12 +5,10 @@ import dd.projects.ddshop.entities.AttributeValue;
 import dd.projects.ddshop.entities.ProductAttribute;
 import dd.projects.ddshop.mappers.AttributeValueMapper;
 import dd.projects.ddshop.repositories.AttributeValueRepository;
-import dd.projects.ddshop.repositories.SubcategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
+
 
 import static java.util.stream.Collectors.toList;
 
@@ -18,8 +16,6 @@ import static java.util.stream.Collectors.toList;
 public class AttributeValueService {
 
     private final AttributeValueRepository attributeValueRepository;
-
-    AttributeValueMapper attributeValueMapper = new AttributeValueMapper();
 
     @Autowired
     public AttributeValueService (AttributeValueRepository attributeValueRepository){
@@ -46,16 +42,12 @@ public class AttributeValueService {
                 .collect(toList());
     }
 
-    public Optional<AttributeValue> readAttributeValue(Integer attributeValueId) {
-        return attributeValueRepository.findById(attributeValueId);
-    }
-
     public void updateAttributeValue (int attributeValueId, AttributeValue newAttributeValue) {
         AttributeValue attributeValue = attributeValueRepository.findById(attributeValueId).get();
         attributeValue.setValue(newAttributeValue.getValue());
        attributeValueRepository.save(attributeValue);
     }
-    public void deleteAttributeValueyById (int id) {
+    public void deleteAttributeValueById (int id) {
         attributeValueRepository.deleteById(id);
     }
 }

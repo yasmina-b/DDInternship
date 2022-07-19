@@ -27,8 +27,8 @@ public class ProductAttributeController {
     }
 
     @PostMapping("/createProductAttribute")
-    public ResponseEntity <Object> createProductAttribute(@RequestBody ProductAttribute productAttribute){
-        productAttributeService.createProductAttribute(productAttribute);
+    public ResponseEntity <Object> createProductAttribute(@RequestBody ProductAttributeDTO productAttributeDTO){
+        productAttributeService.createProductAttribute(productAttributeDTO);
         return new ResponseEntity<>("",HttpStatus.OK);
     }
 

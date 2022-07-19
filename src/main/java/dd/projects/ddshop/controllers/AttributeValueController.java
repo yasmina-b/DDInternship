@@ -32,7 +32,7 @@ public class AttributeValueController {
     }
 
     @PostMapping("/createAttributeValue")
-    public ResponseEntity <Object> createSubcategory (@RequestBody AttributeValueDTO attributeValueDTO){
+    public ResponseEntity <Object> createAttributeValue (@RequestBody AttributeValueDTO attributeValueDTO){
         Optional<ProductAttribute> optionalProductAttribute = productAttributeService.readProductAttribute(attributeValueDTO.getProductAttributeId());
         ProductAttribute productAttribute = optionalProductAttribute.get();
         attributeValueService.createAttributeValue(attributeValueDTO,productAttribute);
@@ -47,6 +47,6 @@ public class AttributeValueController {
 
     @DeleteMapping("/deleteAttributeValueById/{id}")
     void deleteAttributeValueById (@PathVariable Integer id) {
-        attributeValueService.deleteAttributeValueyById(id);
+        attributeValueService.deleteAttributeValueById(id);
     }
 }

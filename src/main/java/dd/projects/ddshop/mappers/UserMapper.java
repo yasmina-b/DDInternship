@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 @Mapper
 public class UserMapper {
 
-   public User sourceToDestination(UserDTO userDto) {
+   public static User sourceToDestination(UserDTO userDto) {
        User user = new User();
        user.setFirstName(userDto.getFirstName());
        user.setLastName(userDto.getLastName());
@@ -15,5 +15,10 @@ public class UserMapper {
        user.setPhoneNumber(userDto.getPhoneNumber());
        return user;
    }
+
+   public static UserDTO trans (User user){
+       return new UserDTO(user.getFirstName(),user.getLastName(),user.getEmail(),user.getPhoneNumber());
+   }
+
 
 }

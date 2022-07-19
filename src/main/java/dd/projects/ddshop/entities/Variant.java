@@ -30,7 +30,13 @@ public class Variant {
     @Temporal(TemporalType.DATE)
     public Date addedDate;
 
-    @OneToMany(mappedBy = "variantId")
-    public List<VariantAssignedValue> variantAssignedValue;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "variant_assigned_value",
+            joinColumns = @JoinColumn(name = "variant_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "assigned_value_id",
+                    referencedColumnName = "id"))
+    private List<AssignedValue> assignedValues;
+
+
 
 }
