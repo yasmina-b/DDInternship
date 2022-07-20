@@ -13,9 +13,9 @@ public class CartEntryDTO {
 
     private double totalPricePerEntry;
 
-    private int variantId;
+    private VariantDTO variantId;
 
-    private int cartId;
+    private CartDTO cartId;
 
 
 }

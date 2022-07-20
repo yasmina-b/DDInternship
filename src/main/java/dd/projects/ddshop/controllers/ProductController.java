@@ -1,11 +1,8 @@
 package dd.projects.ddshop.controllers;
 
 import dd.projects.ddshop.dtos.ProductDTO;
-import dd.projects.ddshop.dtos.SubcategoryDTO;
-import dd.projects.ddshop.entities.Product;
 import dd.projects.ddshop.entities.Subcategory;
-import dd.projects.ddshop.mappers.SubcategoryDtoMapper;
-import dd.projects.ddshop.mappers.SubcategoryMapper;
+import dd.projects.ddshop.mappers.CategoryMapperImpl;
 import dd.projects.ddshop.services.ProductService;
 import dd.projects.ddshop.services.SubcategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,19 +11,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class ProductController {
 
     private final ProductService productService;
 
-    @Autowired
-    SubcategoryService subcategoryService;
+    private final SubcategoryService subcategoryService;
+    private final CategoryMapperImpl categoryMapper;
 
     @Autowired
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService, SubcategoryService subcategoryService, CategoryMapperImpl categoryMapper) {
         this.productService = productService;
+        this.subcategoryService = subcategoryService;
+        this.categoryMapper = categoryMapper;
     }
 
     @GetMapping("/getProduct")
@@ -36,14 +34,14 @@ public class ProductController {
 
     @PostMapping("/createProduct")
     public ResponseEntity<Object> addProduct(@RequestBody ProductDTO productDto) {
-        Subcategory subcategory = subcategoryService.readSubcategory(productDto.getSubcategoryId().getCategoryId());
+        Subcategory subcategory = subcategoryService.readSubcategory(categoryMapper.toCategory(productDto.getSubcategoryId().getCategoryId()).getId());
         productService.createProduct(productDto, subcategory);
         return new ResponseEntity<>("", HttpStatus.CREATED);
     }
 
     @PutMapping("/updateProduct/{id}")
-    public ResponseEntity<Object> updateProduct (@PathVariable Integer id, @RequestBody Product newProduct) {
-        productService.updateProduct(id,newProduct);
+    public ResponseEntity<Object> updateProduct (@PathVariable Integer id, @RequestBody ProductDTO newProductDTO) {
+        productService.updateProduct(id,newProductDTO);
         return new ResponseEntity<>("",HttpStatus.OK);
     }
 

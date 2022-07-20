@@ -18,10 +18,10 @@ public class UserDTO {
 
     private String phoneNumber;
 
-    public UserDTO(User user) {
-        this.setFirstName(user.getFirstName());
-        this.setLastName(user.getLastName());
-        this.setEmail(user.getEmail());
-        this.setPhoneNumber(user.getPhoneNumber());
-    }
+//    public UserDTO(User user) {
+//        this.setFirstName(user.getFirstName());
+//        this.setLastName(user.getLastName());
+//        this.setEmail(user.getEmail());
+//        this.setPhoneNumber(user.getPhoneNumber());
+//    }
 }

@@ -19,15 +19,8 @@ public class VariantDTO {
 
     private Date addedDate;
 
-    private int productId;
+    private ProductDTO productId;
 
-    private List<Integer> assignedValues;
-
-    public VariantDTO(Variant variant){
-        this.setProductId(variant.getProductId().getId());
-        this.setPrice(variant.getPrice());
-        this.setAvailableQuantity(variant.getAvailableQuantity());
-        this.setAddedDate(variant.getAddedDate());
-    }
+    private List<AssignedValueDTO> assignedValues;
 
 }

@@ -2,7 +2,7 @@ package dd.projects.ddshop.controllers;
 
 import dd.projects.ddshop.dtos.VariantDTO;
 import dd.projects.ddshop.entities.Product;
-import dd.projects.ddshop.entities.Variant;
+import dd.projects.ddshop.mappers.ProductMapperImpl;
 import dd.projects.ddshop.services.ProductService;
 import dd.projects.ddshop.services.VariantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,19 +11,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class VariantController {
 
    private final VariantService variantService;
 
-    @Autowired
-    ProductService productService;
+   private final ProductService productService;
+
+   private final ProductMapperImpl productMapper;
 
     @Autowired
-    public VariantController(VariantService variantService) {
+    public VariantController(VariantService variantService, ProductService productService, ProductMapperImpl productMapper) {
       this.variantService = variantService;
+      this.productService = productService;
+      this.productMapper = productMapper;
     }
 
     @GetMapping("/getVariant")
@@ -32,15 +34,14 @@ public class VariantController {
     }
 
     @PostMapping("/createVariant")
-    public ResponseEntity<Object> addVariant(@RequestBody VariantDTO variantDto) {
-        Optional<Product> optionalProduct = productService.readProduct(variantDto.getProductId());
-        Product product = optionalProduct.get();
-        variantService.createVariant(variantDto,product);
+    public ResponseEntity<Object> addVariant(@RequestBody VariantDTO variantDTO) {
+        Product product = productService.readProduct(productMapper.toProduct(variantDTO.getProductId()).getId());
+        variantService.createVariant(variantDTO,product);
         return new ResponseEntity<>("", HttpStatus.CREATED);
     }
 
     @PutMapping("/updateVariant/{id}")
-    public ResponseEntity<Object> updateVariant (@PathVariable Integer id, @RequestBody Variant newVariant) {
+    public ResponseEntity<Object> updateVariant (@PathVariable Integer id, @RequestBody VariantDTO newVariant) {
         variantService.updateVariant(id,newVariant);
         return new ResponseEntity<>("",HttpStatus.OK);
     }

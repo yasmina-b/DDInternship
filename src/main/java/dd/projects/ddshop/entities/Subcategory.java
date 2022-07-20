@@ -1,6 +1,7 @@
 package dd.projects.ddshop.entities;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "subcategory")
+@NoArgsConstructor
 public class Subcategory {
 
   @Id
@@ -28,4 +30,9 @@ public class Subcategory {
 
   @ManyToMany(mappedBy = "subcategories", cascade = CascadeType.ALL)
   public List <ProductAttribute> productAttributes;
+
+  public Subcategory(String name, Category category) {
+    this.name = name;
+    this.categoryId = category;
+  }
 }

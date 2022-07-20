@@ -1,48 +1,42 @@
 package dd.projects.ddshop.services;
 
 import dd.projects.ddshop.dtos.CategoryDTO;
-import dd.projects.ddshop.dtos.SubcategoryDTO;
 import dd.projects.ddshop.entities.Category;
-import dd.projects.ddshop.mappers.CategoryMapper;
-import dd.projects.ddshop.mappers.SubcategoryMapper;
+import dd.projects.ddshop.mappers.CategoryMapperImpl;
 import dd.projects.ddshop.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
-
 import static java.util.stream.Collectors.toList;
 
 @Service
 public class CategoryService{
     private final CategoryRepository categoryRepository;
 
-    CategoryMapper categoryMapper = new CategoryMapper();
+    private final CategoryMapperImpl categoryMapper;
 
     @Autowired
-    public CategoryService (CategoryRepository categoryRepository){
+    public CategoryService (CategoryRepository categoryRepository, CategoryMapperImpl categoryMapper){
         this.categoryRepository = categoryRepository;
+        this.categoryMapper = categoryMapper;
     }
 
-    public void createCategory (Category category) {
-        categoryRepository.save(category);
+    public void createCategory (CategoryDTO categoryDTO) {
+        categoryRepository.save(categoryMapper.toCategory(categoryDTO));
     }
 
-    public Optional<Category> readCategory(Integer categoryId) {
-        return categoryRepository.findById(categoryId);
+    public Category readCategory(Integer categoryId) {
+        return categoryRepository.getReferenceById(categoryId);
     }
-
     public List<CategoryDTO> getCategory() {
         return categoryRepository.findAll()
                 .stream()
-                .map(CategoryMapper::trans)
+                .map(categoryMapper::toCategoryDTO)
                 .collect(toList());
     }
-
-    public void updateCategory (int categoryId, Category newCategory) {
+    public void updateCategory (int categoryId, CategoryDTO newCategoryDTO) {
         Category category = categoryRepository.findById(categoryId).get();
-        category.setName(newCategory.getName());
+        category.setName(newCategoryDTO.getName());
         categoryRepository.save(category);
     }
     public void deleteCategoryById (int id) {

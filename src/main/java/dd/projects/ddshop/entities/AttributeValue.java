@@ -1,5 +1,6 @@
 package dd.projects.ddshop.entities;
 
+import dd.projects.ddshop.dtos.AttributeValueDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

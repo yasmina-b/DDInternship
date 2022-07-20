@@ -3,7 +3,7 @@ package dd.projects.ddshop.services;
 import dd.projects.ddshop.dtos.ProductDTO;
 import dd.projects.ddshop.entities.Product;
 import dd.projects.ddshop.entities.Subcategory;
-import dd.projects.ddshop.mappers.ProductMapper;
+import dd.projects.ddshop.mappers.ProductMapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import dd.projects.ddshop.repositories.ProductRepository;
@@ -18,19 +18,20 @@ public class ProductService{
 
     private final ProductRepository productRepository;
 
-    ProductMapper productMapper = new ProductMapper();
+    private final ProductMapperImpl productMapper;
 
     @Autowired
-    public ProductService (ProductRepository productRepository){
+    public ProductService (ProductRepository productRepository, ProductMapperImpl productMapper){
         this.productRepository = productRepository;
+        this.productMapper = productMapper;
     }
 
     public static Product getProductFromDTO(ProductDTO productDto, Subcategory subcategory) {
         Product product = new Product(productDto.getName(),productDto.getDescription(),subcategory);
         return product;
     }
-    public Optional<Product> readProduct(Integer productId) {
-        return productRepository.findById(productId);
+    public Product readProduct(Integer productId) {
+        return productRepository.getReferenceById(productId);
     }
 
     public void createProduct (ProductDTO productDto, Subcategory subcategory) {
@@ -41,14 +42,14 @@ public class ProductService{
     public List<ProductDTO> getProduct() {
         return productRepository.findAll()
                 .stream()
-                .map(productMapper::trans)
+                .map(productMapper::toProductDTO)
                 .collect(toList());
     }
 
-    public void updateProduct (int productId, Product newProduct) {
+    public void updateProduct (int productId, ProductDTO newProductDTO) {
         Product product = productRepository.findById(productId).get();
-        product.setName(newProduct.getName());
-        product.setDescription(newProduct.getDescription());
+        product.setName(newProductDTO.getName());
+        product.setDescription(newProductDTO.getDescription());
         productRepository.save(product);
     }
 

@@ -1,10 +1,11 @@
 package dd.projects.ddshop.services;
 
-import dd.projects.ddshop.dtos.ProductDTO;
+import dd.projects.ddshop.dtos.AssignedValueDTO;
 import dd.projects.ddshop.dtos.VariantDTO;
+import dd.projects.ddshop.entities.AssignedValue;
 import dd.projects.ddshop.entities.Product;
 import dd.projects.ddshop.entities.Variant;
-import dd.projects.ddshop.mappers.VariantMapper;
+import dd.projects.ddshop.mappers.VariantMapperImpl;
 import dd.projects.ddshop.repositories.AssignedValueRepository;
 import dd.projects.ddshop.repositories.VariantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +23,13 @@ public class VariantService {
 
     private final AssignedValueRepository assignedValueRepository;
 
+    private final VariantMapperImpl variantMapper;
+
     @Autowired
-    public VariantService (VariantRepository variantRepository, AssignedValueRepository assignedValueRepository){
+    public VariantService (VariantRepository variantRepository, AssignedValueRepository assignedValueRepository, VariantMapperImpl variantMapper){
         this.variantRepository = variantRepository;
         this.assignedValueRepository = assignedValueRepository;
+        this.variantMapper = variantMapper;
     }
 
     public static Variant getVariantFromDTO(VariantDTO variantDTO, Product product){
@@ -40,15 +44,15 @@ public class VariantService {
 
     public void createVariant (VariantDTO variantDTO, Product product) {
         Variant variant = getVariantFromDTO(variantDTO, product);
-        for (int id : variantDTO.getAssignedValues())
-            variant.getAssignedValues().add(assignedValueRepository.getReferenceById(id));
+        for (AssignedValueDTO id : variantDTO.getAssignedValues())
+            variant.getAssignedValues().add(assignedValueRepository.getReferenceById(id.getAssignedValueId()));
         variantRepository.save(variant);
     }
 
     public List<VariantDTO> getVariant() {
         return variantRepository.findAll()
                 .stream()
-                .map(VariantMapper::trans)
+                .map(variantMapper::toVariantDTO)
                 .collect(toList());
     }
 
@@ -56,7 +60,7 @@ public class VariantService {
         return variantRepository.getReferenceById(variantId);
     }
 
-    public void updateVariant (int variantId, Variant newVariant) {
+    public void updateVariant (int variantId, VariantDTO newVariant) {
         Variant variant = variantRepository.findById(variantId).get();
         variant.setPrice(newVariant.getPrice());
         variant.setAvailableQuantity(newVariant.getAvailableQuantity());

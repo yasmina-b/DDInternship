@@ -1,8 +1,8 @@
 package dd.projects.ddshop.controllers;
 
 import dd.projects.ddshop.dtos.AttributeValueDTO;
-import dd.projects.ddshop.entities.AttributeValue;
 import dd.projects.ddshop.entities.ProductAttribute;
+import dd.projects.ddshop.mappers.ProductAttributeMapperImpl;
 import dd.projects.ddshop.services.AttributeValueService;
 import dd.projects.ddshop.services.ProductAttributeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,19 +11,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class AttributeValueController {
 
     private final AttributeValueService attributeValueService;
 
-    @Autowired
-    ProductAttributeService productAttributeService;
+    private final ProductAttributeService productAttributeService;
+
+    private final ProductAttributeMapperImpl productAttributeMapper;
 
     @Autowired
-    public AttributeValueController (AttributeValueService attributeValueService) {
+    public AttributeValueController (AttributeValueService attributeValueService, ProductAttributeService productAttributeService, ProductAttributeMapperImpl productAttributeMapper) {
         this.attributeValueService = attributeValueService;
+        this.productAttributeService = productAttributeService;
+        this.productAttributeMapper = productAttributeMapper;
     }
 
     @GetMapping("/getAttributeValue")
@@ -33,15 +35,14 @@ public class AttributeValueController {
 
     @PostMapping("/createAttributeValue")
     public ResponseEntity <Object> createAttributeValue (@RequestBody AttributeValueDTO attributeValueDTO){
-        Optional<ProductAttribute> optionalProductAttribute = productAttributeService.readProductAttribute(attributeValueDTO.getProductAttributeId());
-        ProductAttribute productAttribute = optionalProductAttribute.get();
+        ProductAttribute productAttribute = productAttributeService.readProductAttribute(productAttributeMapper.toProductAttribute(attributeValueDTO.getProductAttributeId()).getId());
         attributeValueService.createAttributeValue(attributeValueDTO,productAttribute);
         return new ResponseEntity<>("", HttpStatus.CREATED);
     }
 
     @PutMapping("/updateAttributeValue/{id}")
-    public ResponseEntity<Object> updateAttributeValue (@PathVariable Integer id, @RequestBody AttributeValue newAttributeValue) {
-        attributeValueService.updateAttributeValue(id,newAttributeValue);
+    public ResponseEntity<Object> updateAttributeValue (@PathVariable Integer id, @RequestBody AttributeValueDTO newAttributeValueDTO) {
+        attributeValueService.updateAttributeValue(id,newAttributeValueDTO);
         return new ResponseEntity<>("",HttpStatus.OK);
     }
 

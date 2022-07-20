@@ -25,14 +25,14 @@ public class CartController {
     }
 
     @PostMapping("/createCart")
-    public ResponseEntity <Object> createCart(@RequestBody Cart cart){
-        cartService.addCart(cart);
+    public ResponseEntity <Object> createCart(@RequestBody CartDTO cartDTO){
+        cartService.addCart(cartDTO);
         return new ResponseEntity<>("",HttpStatus.OK);
     }
 
     @PutMapping("/updateCart/{id}")
-    public ResponseEntity<Object> updateCart (@PathVariable Integer id, @RequestBody Cart newCart) {
-        cartService.updateCart(id,newCart);
+    public ResponseEntity<Object> updateCart (@PathVariable Integer id, @RequestBody CartDTO newCartDTO) {
+        cartService.updateCart(id,newCartDTO);
         return new ResponseEntity<>("",HttpStatus.OK);
     }
 
