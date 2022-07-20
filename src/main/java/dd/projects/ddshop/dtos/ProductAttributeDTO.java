@@ -11,7 +11,8 @@ public class ProductAttributeDTO {
 
     private String name;
 
-    private List <String> attributeValue;
+    private List<AttributeValueDTO> attributeValue;
 
-    private List <Integer> subcategories;
+    private List<SubcategoryDTO> subcategories;
+
 }

@@ -1,8 +1,6 @@
 package dd.projects.ddshop.entities;
 
 import dd.projects.ddshop.dtos.CartEntryDTO;
-import dd.projects.ddshop.dtos.UserDTO;
-import dd.projects.ddshop.mappers.CartMapper;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

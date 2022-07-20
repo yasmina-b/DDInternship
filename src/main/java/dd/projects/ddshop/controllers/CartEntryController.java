@@ -2,28 +2,35 @@ package dd.projects.ddshop.controllers;
 
 import dd.projects.ddshop.dtos.CartEntryDTO;
 import dd.projects.ddshop.entities.*;
+import dd.projects.ddshop.mappers.CartMapperImpl;
+import dd.projects.ddshop.mappers.VariantMapperImpl;
 import dd.projects.ddshop.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class CartEntryController {
 
     private final CartEntryService cartEntryService;
 
-    @Autowired
-    VariantService variantService;
+    private final VariantService variantService;
+
+    private final CartService cartService;
+
+    private final VariantMapperImpl variantMapper;
+
+    private final CartMapperImpl cartMapper;
 
     @Autowired
-    CartService cartService;
-
-    @Autowired
-    public CartEntryController (CartEntryService cartEntryService) {
+    public CartEntryController (CartEntryService cartEntryService, VariantService variantService, CartService cartService, VariantMapperImpl variantMapper, CartMapperImpl cartMapper) {
         this.cartEntryService = cartEntryService;
+        this.variantService = variantService;
+        this.cartService = cartService;
+        this.variantMapper = variantMapper;
+        this.cartMapper = cartMapper;
     }
 
     @GetMapping("/getCartEntry")
@@ -33,17 +40,15 @@ public class CartEntryController {
 
     @PostMapping("/createCartEntry")
     public ResponseEntity <Object> createCartEntry (@RequestBody CartEntryDTO cartEntryDTO){
-        Variant variant = variantService.readVariant(cartEntryDTO.getVariantId());
-        System.out.println(variant);
-        Cart cart = cartService.readCart(cartEntryDTO.getCartId());
-        System.out.println(cart);
+        Variant variant = variantService.readVariant(variantMapper.toVariant(cartEntryDTO.getVariantId()).getId());
+        Cart cart = cartService.readCart(cartMapper.toCart(cartEntryDTO.getCartId()).getId());
         cartEntryService.createCartEntry(cartEntryDTO,variant,cart);
         return new ResponseEntity<>("", HttpStatus.CREATED);
     }
 
     @PutMapping("/updateCartEntry/{id}")
-    public ResponseEntity<Object> updateCartEntry (@PathVariable Integer id, @RequestBody CartEntry newCartEntry) {
-        cartEntryService.updateCartEntry(id,newCartEntry);
+    public ResponseEntity<Object> updateCartEntry (@PathVariable Integer id, @RequestBody CartEntryDTO newCartEntryDTO) {
+        cartEntryService.updateCartEntry(id,newCartEntryDTO);
         return new ResponseEntity<>("",HttpStatus.OK);
     }
 

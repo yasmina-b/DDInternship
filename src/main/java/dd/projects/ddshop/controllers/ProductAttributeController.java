@@ -33,8 +33,8 @@ public class ProductAttributeController {
     }
 
     @PutMapping("/updateProductAttribute/{id}")
-    public ResponseEntity<Object> updateProductAttribute (@PathVariable Integer id, @RequestBody ProductAttribute newProductAttribute) {
-       productAttributeService.updateProductAttribute(id,newProductAttribute);
+    public ResponseEntity<Object> updateProductAttribute (@PathVariable Integer id, @RequestBody ProductAttributeDTO newProductAttributeDTO) {
+       productAttributeService.updateProductAttribute(id,newProductAttributeDTO);
         return new ResponseEntity<>("",HttpStatus.OK);
     }
 

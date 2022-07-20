@@ -2,7 +2,7 @@ package dd.projects.ddshop.services;
 
 import dd.projects.ddshop.dtos.CartEntryDTO;
 import dd.projects.ddshop.entities.*;
-import dd.projects.ddshop.mappers.CartEntryMapper;
+import dd.projects.ddshop.mappers.CartEntryMapperImpl;
 import dd.projects.ddshop.repositories.CartEntryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,9 +13,12 @@ import static java.util.stream.Collectors.toList;
 public class CartEntryService {
 
     private final CartEntryRepository cartEntryRepository;
+
+    private final CartEntryMapperImpl cartEntryMapper;
     @Autowired
-    public CartEntryService (CartEntryRepository cartEntryRepository){
+    public CartEntryService (CartEntryRepository cartEntryRepository, CartEntryMapperImpl cartEntryMapper){
        this.cartEntryRepository = cartEntryRepository;
+       this.cartEntryMapper = cartEntryMapper;
     }
 
     public static CartEntry getCartEntryFromDTO(CartEntryDTO cartEntryDTO, Variant variant, Cart cart){
@@ -36,14 +39,14 @@ public class CartEntryService {
     public List<CartEntryDTO> getCartEntry() {
         return cartEntryRepository.findAll()
                 .stream()
-                .map(CartEntryMapper::trans)
+                .map(cartEntryMapper::toCartEntryDTO)
                 .collect(toList());
     }
-    public void updateCartEntry (int cartEntryId, CartEntry newCartEntry) {
+    public void updateCartEntry (int cartEntryId, CartEntryDTO newCartEntryDTO) {
         CartEntry cartEntry = cartEntryRepository.findById(cartEntryId).get();
-        cartEntry.setQuantity(newCartEntry.getQuantity());
-        cartEntry.setPricePerPiece(newCartEntry.getPricePerPiece());
-        cartEntry.setTotalPricePerEntry(newCartEntry.getTotalPricePerEntry());
+        cartEntry.setQuantity(newCartEntryDTO.getQuantity());
+        cartEntry.setPricePerPiece(newCartEntryDTO.getPricePerPiece());
+        cartEntry.setTotalPricePerEntry(newCartEntryDTO.getTotalPricePerEntry());
         cartEntryRepository.save(cartEntry);
     }
     public void deleteCartEntryById (int id) {

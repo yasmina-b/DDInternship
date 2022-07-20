@@ -4,8 +4,6 @@ package dd.projects.ddshop.controllers;
 import dd.projects.ddshop.dtos.UserCreationDTO;
 import dd.projects.ddshop.dtos.UserDTO;
 import dd.projects.ddshop.entities.User;
-import dd.projects.ddshop.mappers.UserCreationMapper;
-import dd.projects.ddshop.mappers.UserMapper;
 import dd.projects.ddshop.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,8 +17,6 @@ public class UserController {
 
     private final UserService userService;
 
-    UserCreationMapper userCreationMapper = new UserCreationMapper() ;
-
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
@@ -33,12 +29,12 @@ public class UserController {
 
     @PostMapping("/createUser")
     public ResponseEntity <Object> createUser (@RequestBody UserCreationDTO userCreationDTO){
-        userService.createUser(userCreationMapper.sourceToDestination(userCreationDTO));
+        userService.createUser(userCreationDTO);
         return new ResponseEntity<>("",HttpStatus.OK);
     }
 
     @PutMapping("/updateUser/{id}")
-    public ResponseEntity<Object> updateUser (@PathVariable Integer id, @RequestBody User newUser) {
+    public ResponseEntity<Object> updateUser (@PathVariable Integer id, @RequestBody UserCreationDTO newUser) {
         userService.updateUser(id,newUser);
         return new ResponseEntity<>("",HttpStatus.OK);
     }
