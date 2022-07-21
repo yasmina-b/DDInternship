@@ -25,9 +25,6 @@ public class CategoryService{
         categoryRepository.save(categoryMapper.toCategory(categoryDTO));
     }
 
-    public Category readCategory(Integer categoryId) {
-        return categoryRepository.getReferenceById(categoryId);
-    }
     public List<CategoryDTO> getCategory() {
         return categoryRepository.findAll()
                 .stream()

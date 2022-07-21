@@ -1,8 +1,6 @@
 package dd.projects.ddshop.controllers;
 
-
 import dd.projects.ddshop.dtos.CategoryDTO;
-import dd.projects.ddshop.entities.Category;
 import dd.projects.ddshop.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

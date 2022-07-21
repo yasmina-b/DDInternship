@@ -28,5 +28,11 @@ public class AttributeValue {
         this.value = attribute;
         this.productAttributeId = productAttribute;
     }
+
+    public AttributeValue(AttributeValue toAttributeValue, ProductAttribute productAttribute) {
+        this.id = toAttributeValue.getId();
+        this.value = toAttributeValue.getValue();
+        this.productAttributeId = productAttribute;
+    }
 }
 

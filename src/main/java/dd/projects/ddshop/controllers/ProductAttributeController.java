@@ -1,9 +1,6 @@
 package dd.projects.ddshop.controllers;
 
 import dd.projects.ddshop.dtos.ProductAttributeDTO;
-import dd.projects.ddshop.entities.Address;
-import dd.projects.ddshop.entities.ProductAttribute;
-import dd.projects.ddshop.services.AddressService;
 import dd.projects.ddshop.services.ProductAttributeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,7 +24,7 @@ public class ProductAttributeController {
     }
 
     @PostMapping("/createProductAttribute")
-    public ResponseEntity <Object> createProductAttribute(@RequestBody ProductAttributeDTO productAttributeDTO){
+    public ResponseEntity <Object> createProductAttribute(@RequestBody final ProductAttributeDTO productAttributeDTO){
         productAttributeService.createProductAttribute(productAttributeDTO);
         return new ResponseEntity<>("",HttpStatus.OK);
     }
