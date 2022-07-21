@@ -19,7 +19,7 @@ public class VariantDTO {
 
     private Date addedDate;
 
-    private ProductDTO productId;
+    public ProductDTO productId;
 
     private List<AssignedValueDTO> assignedValues;
 

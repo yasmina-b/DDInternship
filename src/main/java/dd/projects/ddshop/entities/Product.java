@@ -1,10 +1,8 @@
 package dd.projects.ddshop.entities;
 
-import dd.projects.ddshop.dtos.SubcategoryDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +23,11 @@ public class Product {
     @Column(name = "description", length = 256, nullable = false)
     public String description;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "subcategory_id")
     public Subcategory subcategoryId;
 
-    @OneToMany (mappedBy = "productId")
+    @OneToMany (mappedBy = "productId", cascade = CascadeType.ALL)
     public List<Variant> variant;
 
     public Product(String name, String description, Subcategory subcategory) {
@@ -37,5 +35,13 @@ public class Product {
         this.description = description;
         this.subcategoryId = subcategory;
         this.variant = new ArrayList<>();
+    }
+
+    public Product(Product toProduct, Subcategory subcategory) {
+        this.id = toProduct.getId();
+        this.name = toProduct.getName();
+        this.description = toProduct.getDescription();
+        this.subcategoryId = subcategory;
+
     }
 }

@@ -7,11 +7,8 @@ import lombok.Data;
 @AllArgsConstructor
 public class SubcategoryDTO {
 
+    private int id;
+
     private String name;
-
-    private CategoryDTO categoryId;
-
-    private int subcategoryId;
-
 
 }

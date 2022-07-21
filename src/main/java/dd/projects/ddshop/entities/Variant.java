@@ -1,6 +1,7 @@
 package dd.projects.ddshop.entities;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name="variant")
+@NoArgsConstructor
 public class Variant {
 
     @Id
@@ -37,6 +39,12 @@ public class Variant {
                     referencedColumnName = "id"))
     private List<AssignedValue> assignedValues;
 
+    public Variant(Variant toVariant, Product product) {
+        this.id = toVariant.getId();
+        this.price = toVariant.getPrice();
+        this.availableQuantity = toVariant.getAvailableQuantity();
+        this.addedDate = toVariant.getAddedDate();
+        this.productId = product;
 
-
+    }
 }

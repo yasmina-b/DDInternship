@@ -12,10 +12,7 @@ import dd.projects.ddshop.repositories.ProductAttributeRepository;
 import dd.projects.ddshop.repositories.SubcategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
-
 import static java.util.stream.Collectors.toList;
 
 @Service
@@ -30,20 +27,20 @@ public class ProductAttributeService {
     private final ProductAttributeMapperImpl productAttributeMapper;
 
     @Autowired
-    public ProductAttributeService (ProductAttributeRepository productAttributeRepository, SubcategoryRepository subcategoryRepository, AssignedValueRepository assignedValueRepository, ProductAttributeMapperImpl productAttributeMapper) {
+    public ProductAttributeService (final ProductAttributeRepository productAttributeRepository, final SubcategoryRepository subcategoryRepository, final AssignedValueRepository assignedValueRepository, final ProductAttributeMapperImpl productAttributeMapper) {
        this.productAttributeRepository = productAttributeRepository;
        this.subcategoryRepository = subcategoryRepository;
        this.assignedValueRepository = assignedValueRepository;
        this.productAttributeMapper = productAttributeMapper;
     }
-    public void createProductAttribute (ProductAttributeDTO productAttributeDTO) {
+    public void createProductAttribute (final ProductAttributeDTO productAttributeDTO) {
         ProductAttribute productAttribute = new ProductAttribute(productAttributeDTO.getName());
 
         for(AttributeValueDTO attribute: productAttributeDTO.getAttributeValue())
             productAttribute.getAttributeValue().add(new AttributeValue(attribute.getValue(), productAttribute));
 
         for(SubcategoryDTO id : productAttributeDTO.getSubcategories())
-            productAttribute.getSubcategories().add(subcategoryRepository.getReferenceById(id.getSubcategoryId()));
+            productAttribute.getSubcategories().add(subcategoryRepository.getReferenceById(id.getId()));
 
         productAttributeRepository.save(productAttribute);
 
@@ -51,7 +48,6 @@ public class ProductAttributeService {
             assignedValueRepository.save(new AssignedValue(value,productAttribute));
 
     }
-
     public List<ProductAttributeDTO> getProductAttribute() {
         return productAttributeRepository.findAll()
                 .stream()

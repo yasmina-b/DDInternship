@@ -11,5 +11,5 @@ public class AssignedValueDTO {
 
     private AttributeValueDTO attributeValueId;
 
-    private int assignedValueId;
+    private int id;
 }

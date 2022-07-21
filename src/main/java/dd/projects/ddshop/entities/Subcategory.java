@@ -28,7 +28,11 @@ public class Subcategory {
   @OneToMany (mappedBy = "subcategoryId")
   public List<Product> products;
 
-  @ManyToMany(mappedBy = "subcategories", cascade = CascadeType.ALL)
+  @ManyToMany(mappedBy = "subcategories", fetch = FetchType.LAZY,
+          cascade = {
+                  CascadeType.PERSIST,
+                  CascadeType.MERGE
+          })
   public List <ProductAttribute> productAttributes;
 
   public Subcategory(String name, Category category) {

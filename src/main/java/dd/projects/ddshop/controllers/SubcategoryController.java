@@ -1,10 +1,6 @@
 package dd.projects.ddshop.controllers;
 
 import dd.projects.ddshop.dtos.SubcategoryDTO;
-import dd.projects.ddshop.entities.Category;
-import dd.projects.ddshop.entities.Subcategory;
-import dd.projects.ddshop.mappers.CategoryMapperImpl;
-import dd.projects.ddshop.services.CategoryService;
 import dd.projects.ddshop.services.SubcategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,15 +14,9 @@ public class SubcategoryController {
 
     private final SubcategoryService subcategoryService;
 
-    private final CategoryService categoryService;
-
-    private final CategoryMapperImpl categoryMapper;
-
     @Autowired
-    public SubcategoryController(SubcategoryService subcategoryService, CategoryService categoryService, CategoryMapperImpl categoryMapper) {
+    public SubcategoryController(SubcategoryService subcategoryService) {
         this.subcategoryService = subcategoryService;
-        this.categoryService = categoryService;
-        this.categoryMapper = categoryMapper;
     }
 
     @GetMapping("/getSubcategory")
@@ -35,8 +25,7 @@ public class SubcategoryController {
     }
 
     @PostMapping("/createSubcategory/{id}")
-    public ResponseEntity <Object> createSubcategory (@RequestBody SubcategoryDTO subcategoryDTO, @PathVariable int id){
-        //Category category = categoryService.readCategory(categoryMapper.toCategory(subcategoryDTO.getCategoryId()).getId());
+    public ResponseEntity <String> createSubcategory (@RequestBody SubcategoryDTO subcategoryDTO, @PathVariable int id){
         subcategoryService.createSubcategory(subcategoryDTO.getName(),id);
         return new ResponseEntity<>("", HttpStatus.CREATED);
     }

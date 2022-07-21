@@ -24,7 +24,11 @@ public class ProductAttribute {
     @OneToMany(mappedBy = "productAttributeId", cascade = CascadeType.ALL)
     public List <AttributeValue> attributeValue;
 
-    @ManyToMany
+    @ManyToMany (fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
     @JoinTable(name = "subcategory_product_attribute",
             joinColumns = @JoinColumn(name = "product_attribute_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "subcategory_id",
