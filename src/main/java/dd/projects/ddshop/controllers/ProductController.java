@@ -33,7 +33,7 @@ public class ProductController {
         return new ResponseEntity<>("",HttpStatus.OK);
     }
     @DeleteMapping("/deleteProductById/{id}")
-    void deleteProductById (@PathVariable Integer id) {
+    void deleteProductById (@PathVariable final Integer id) {
         productService.deleteProductById(id);
     }
 }

@@ -15,7 +15,7 @@ public class SubcategoryController {
     private final SubcategoryService subcategoryService;
 
     @Autowired
-    public SubcategoryController(SubcategoryService subcategoryService) {
+    public SubcategoryController(final SubcategoryService subcategoryService) {
         this.subcategoryService = subcategoryService;
     }
 
@@ -25,7 +25,7 @@ public class SubcategoryController {
     }
 
     @PostMapping("/createSubcategory/{id}")
-    public ResponseEntity <String> createSubcategory (@RequestBody SubcategoryDTO subcategoryDTO, @PathVariable int id){
+    public ResponseEntity <String> createSubcategory (@RequestBody final SubcategoryDTO subcategoryDTO, @PathVariable final int id){
         subcategoryService.createSubcategory(subcategoryDTO.getName(),id);
         return new ResponseEntity<>("", HttpStatus.CREATED);
     }
@@ -37,7 +37,7 @@ public class SubcategoryController {
     }
 
     @DeleteMapping("/deleteSubcategoryById/{id}")
-    void deleteSubcategoryById (@PathVariable Integer id) {
+    void deleteSubcategoryById (@PathVariable final Integer id) {
         subcategoryService.deleteSubcategoryById(id);
     }
 }

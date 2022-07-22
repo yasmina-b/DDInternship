@@ -1,12 +1,9 @@
 package dd.projects.ddshop.entities;
 
-import dd.projects.ddshop.dtos.CartEntryDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 @Getter
 @Setter
@@ -29,9 +26,4 @@ public class Cart {
     @OneToMany(mappedBy = "cartId")
     public List <CartEntry> cartEntry;
 
-    public Cart(User userId, double totalPrice, List<CartEntryDTO> cartEntries) {
-        this.userId = userId;
-        this.totalPrice = totalPrice;
-        this.cartEntry = new ArrayList<>();
-    }
 }

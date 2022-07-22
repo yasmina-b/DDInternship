@@ -5,6 +5,7 @@ import dd.projects.ddshop.entities.Product;
 import dd.projects.ddshop.entities.Subcategory;
 import dd.projects.ddshop.mappers.ProductMapperImpl;
 import dd.projects.ddshop.repositories.SubcategoryRepository;
+import dd.projects.ddshop.validations.ProductValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import dd.projects.ddshop.repositories.ProductRepository;
@@ -22,15 +23,19 @@ public class ProductService{
 
     private final SubcategoryRepository subcategoryRepository;
 
+    private final ProductValidation productValidation;
+
     @Autowired
-    public ProductService (final ProductRepository productRepository, ProductMapperImpl productMapper, SubcategoryRepository subcategoryRepository){
+    public ProductService (final ProductRepository productRepository, final ProductMapperImpl productMapper, final SubcategoryRepository subcategoryRepository){
         this.productRepository = productRepository;
         this.productMapper = productMapper;
         this.subcategoryRepository = subcategoryRepository;
+        this.productValidation = new ProductValidation(productRepository);
     }
-    public void createProduct (final ProductDTO productDto, final int id) {
+    public void createProduct (final ProductDTO productDTO, final int id) {
+        productValidation.productValidation(productDTO);
         final Subcategory subcategory = subcategoryRepository.getReferenceById(id);
-        final Product product = new Product(productMapper.toProduct(productDto),subcategory);
+        final Product product = new Product(productMapper.toProduct(productDTO),subcategory);
         product.setVariant(new ArrayList<>());
         productRepository.save(product);
     }
@@ -47,7 +52,7 @@ public class ProductService{
         productRepository.save(product);
     }
 
-    public void deleteProductById (int id) {
+    public void deleteProductById (final int id) {
         productRepository.deleteById(id);
     }
 

@@ -7,6 +7,8 @@ import org.mapstruct.ReportingPolicy;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
 public interface CartEntryMapper {
+
     CartEntryDTO toCartEntryDTO (CartEntry cartEntry);
+
     CartEntry toCartEntry (CartEntryDTO cartEntryDTO);
 }

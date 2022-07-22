@@ -32,7 +32,7 @@ public class VariantController {
         return new ResponseEntity<>("",HttpStatus.OK);
     }
     @DeleteMapping("/deleteVariantById/{id}")
-    void deleteVariantById (@PathVariable Integer id) {
+    void deleteVariantById (@PathVariable final Integer id) {
         variantService.deleteVariantById(id);
     }
 }

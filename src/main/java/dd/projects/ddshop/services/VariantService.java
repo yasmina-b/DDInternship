@@ -48,8 +48,8 @@ public class VariantService {
     public void createVariant (final VariantDTO variantDTO, final int productId) {
         final Product product = productRepository.getReferenceById(productId);
         Variant variant = new Variant(variantMapper.toVariant(variantDTO),product);
-        for (AssignedValueDTO id : variantDTO.getAssignedValues())
-            variant.getAssignedValues().add(assignedValueRepository.getReferenceById(id.getId()));
+//        for (AssignedValueDTO id : variantDTO.getAssignedValues())
+//            variant.getAssignedValues().add(assignedValueRepository.getReferenceById(id.getId()));
         variantRepository.save(variant);
     }
 
@@ -71,7 +71,7 @@ public class VariantService {
         variantRepository.save(variant);
     }
 
-    public void deleteVariantById (int id) {
+    public void deleteVariantById (final int id) {
         variantRepository.deleteById(id);
     }
 }

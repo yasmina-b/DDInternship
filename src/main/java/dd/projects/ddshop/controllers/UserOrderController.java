@@ -16,7 +16,7 @@ public class UserOrderController {
     private final UserOrderService userOrderService;
 
     @Autowired
-    public UserOrderController(UserOrderService userOrderService) {
+    public UserOrderController(final UserOrderService userOrderService) {
        this.userOrderService = userOrderService;
     }
 
@@ -26,7 +26,7 @@ public class UserOrderController {
     }
 
     @PostMapping("/createUserOrder")
-    public ResponseEntity <Object> createUser (@RequestBody UserOrder userOrder){
+    public ResponseEntity <Object> createUser (@RequestBody final UserOrder userOrder){
         userOrderService.createUserOrder(userOrder);
         return new ResponseEntity<>("",HttpStatus.OK);
     }
@@ -38,7 +38,7 @@ public class UserOrderController {
     }
 
     @DeleteMapping("/deleteUserOrderById/{id}")
-    void deleteUserOrderById (@PathVariable Integer id) {
+    void deleteUserOrderById (@PathVariable final Integer id) {
         userOrderService.deleteUserOrderById(id);
     }
 }

@@ -14,7 +14,7 @@ public class AttributeValueController {
     private final AttributeValueService attributeValueService;
 
     @Autowired
-    public AttributeValueController (AttributeValueService attributeValueService) {
+    public AttributeValueController (final AttributeValueService attributeValueService) {
         this.attributeValueService = attributeValueService;
     }
     @GetMapping("/getAttributeValue")
@@ -32,7 +32,7 @@ public class AttributeValueController {
         return new ResponseEntity<>("",HttpStatus.OK);
     }
     @DeleteMapping("/deleteAttributeValueById/{id}")
-    void deleteAttributeValueById (@PathVariable Integer id) {
+    void deleteAttributeValueById (@PathVariable final Integer id) {
         attributeValueService.deleteAttributeValueById(id);
     }
 }

@@ -4,6 +4,7 @@ import dd.projects.ddshop.dtos.CategoryDTO;
 import dd.projects.ddshop.entities.Category;
 import dd.projects.ddshop.mappers.CategoryMapperImpl;
 import dd.projects.ddshop.repositories.CategoryRepository;
+import dd.projects.ddshop.validations.CategoryValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -15,13 +16,17 @@ public class CategoryService{
 
     private final CategoryMapperImpl categoryMapper;
 
+    private final CategoryValidation categoryValidation;
+
     @Autowired
-    public CategoryService (CategoryRepository categoryRepository, CategoryMapperImpl categoryMapper){
+    public CategoryService (final CategoryRepository categoryRepository, final CategoryMapperImpl categoryMapper){
         this.categoryRepository = categoryRepository;
         this.categoryMapper = categoryMapper;
+        this.categoryValidation = new CategoryValidation(categoryRepository);
     }
 
-    public void createCategory (CategoryDTO categoryDTO) {
+    public void createCategory (final CategoryDTO categoryDTO) {
+        categoryValidation.categoryValidation(categoryDTO);
         categoryRepository.save(categoryMapper.toCategory(categoryDTO));
     }
 
@@ -36,7 +41,7 @@ public class CategoryService{
         category.setName(newCategoryDTO.getName());
         categoryRepository.save(category);
     }
-    public void deleteCategoryById (int id) {
+    public void deleteCategoryById (final int id) {
         categoryRepository.deleteById(id);
     }
 }
