@@ -16,11 +16,11 @@ public class AddressService {
     private final AddressMapperImpl addressMapper;
 
     @Autowired
-    public AddressService (AddressRepository addressRepository, AddressMapperImpl addressMapper) {
+    public AddressService (final AddressRepository addressRepository, final AddressMapperImpl addressMapper) {
         this.addressRepository = addressRepository;
         this.addressMapper = addressMapper;
     }
-    public void createAddress (AddressDTO addressDTO) {
+    public void createAddress (final AddressDTO addressDTO) {
         addressRepository.save(addressMapper.toAddress(addressDTO));
     }
     public List<AddressDTO> getAddress() {
@@ -35,7 +35,7 @@ public class AddressService {
         address.setCountry(newAddressDTO.getCountry());
         addressRepository.save(address);
     }
-    public void deleteAddressById (int id) {
+    public void deleteAddressById (final int id) {
         addressRepository.deleteById(id);
     }
 

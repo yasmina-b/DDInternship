@@ -1,9 +1,7 @@
 package dd.projects.ddshop.controllers;
 
-
 import dd.projects.ddshop.dtos.UserCreationDTO;
 import dd.projects.ddshop.dtos.UserDTO;
-import dd.projects.ddshop.entities.User;
 import dd.projects.ddshop.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +16,7 @@ public class UserController {
     private final UserService userService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(final UserService userService) {
         this.userService = userService;
     }
 
@@ -28,7 +26,7 @@ public class UserController {
     }
 
     @PostMapping("/createUser")
-    public ResponseEntity <Object> createUser (@RequestBody UserCreationDTO userCreationDTO){
+    public ResponseEntity <Object> createUser (@RequestBody final UserCreationDTO userCreationDTO){
         userService.createUser(userCreationDTO);
         return new ResponseEntity<>("",HttpStatus.OK);
     }
@@ -40,7 +38,7 @@ public class UserController {
     }
 
     @DeleteMapping("/deleteUserById/{id}")
-    void deleteAddressById (@PathVariable Integer id) {
+    void deleteAddressById (@PathVariable final Integer id) {
         userService.deleteUserById(id);
     }
 }

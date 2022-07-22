@@ -7,6 +7,7 @@ import org.mapstruct.ReportingPolicy;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
 public interface UserCreationMapper {
+
     UserCreationDTO toUserCreationDTO(User user);
 
     User toUser (UserCreationDTO userCreationDTO);

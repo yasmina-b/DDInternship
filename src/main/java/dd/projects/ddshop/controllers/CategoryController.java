@@ -14,7 +14,7 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @Autowired
-    public CategoryController(CategoryService categoryService) {
+    public CategoryController(final CategoryService categoryService) {
         this.categoryService = categoryService;
     }
 
@@ -24,7 +24,7 @@ public class CategoryController {
     }
 
     @PostMapping("/createCategory")
-    public ResponseEntity <Object> createCategory (@RequestBody CategoryDTO categoryDTO){
+    public ResponseEntity <Object> createCategory (@RequestBody final CategoryDTO categoryDTO){
         categoryService.createCategory(categoryDTO);
         return new ResponseEntity<>("",HttpStatus.OK);
     }
@@ -36,7 +36,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/deleteCategoryById/{id}")
-    void deleteCategoryById (@PathVariable Integer id) {
+    void deleteCategoryById (@PathVariable final Integer id) {
         categoryService.deleteCategoryById(id);
     }
 }

@@ -10,6 +10,7 @@ import dd.projects.ddshop.mappers.ProductAttributeMapperImpl;
 import dd.projects.ddshop.repositories.AssignedValueRepository;
 import dd.projects.ddshop.repositories.ProductAttributeRepository;
 import dd.projects.ddshop.repositories.SubcategoryRepository;
+import dd.projects.ddshop.validations.ProductAttributeValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -26,14 +27,18 @@ public class ProductAttributeService {
 
     private final ProductAttributeMapperImpl productAttributeMapper;
 
+    private final ProductAttributeValidation productAttributeValidation;
+
     @Autowired
     public ProductAttributeService (final ProductAttributeRepository productAttributeRepository, final SubcategoryRepository subcategoryRepository, final AssignedValueRepository assignedValueRepository, final ProductAttributeMapperImpl productAttributeMapper) {
        this.productAttributeRepository = productAttributeRepository;
        this.subcategoryRepository = subcategoryRepository;
        this.assignedValueRepository = assignedValueRepository;
        this.productAttributeMapper = productAttributeMapper;
+       this.productAttributeValidation = new ProductAttributeValidation(productAttributeRepository);
     }
     public void createProductAttribute (final ProductAttributeDTO productAttributeDTO) {
+        productAttributeValidation.productAttributeValidation(productAttributeDTO);
         ProductAttribute productAttribute = new ProductAttribute(productAttributeDTO.getName());
 
         for(AttributeValueDTO attribute: productAttributeDTO.getAttributeValue())
@@ -62,7 +67,7 @@ public class ProductAttributeService {
        ProductAttribute productAttribute = productAttributeRepository.getReferenceById(productAttributeId);
        productAttributeRepository.save(productAttribute);
     }
-    public void deleteProductAttributeById (int id) {
+    public void deleteProductAttributeById (final int id) {
         productAttributeRepository.deleteById(id);
     }
 }

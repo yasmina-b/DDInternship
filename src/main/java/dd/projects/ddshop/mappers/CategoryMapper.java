@@ -7,6 +7,8 @@ import org.mapstruct.ReportingPolicy;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
 public interface CategoryMapper {
+
     CategoryDTO toCategoryDTO(Category category);
+
     Category toCategory(CategoryDTO categoryDTO);
 }

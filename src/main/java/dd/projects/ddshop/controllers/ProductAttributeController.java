@@ -15,7 +15,7 @@ public class ProductAttributeController {
     private final ProductAttributeService productAttributeService;
 
     @Autowired
-    public ProductAttributeController(ProductAttributeService productAttributeService) {
+    public ProductAttributeController(final ProductAttributeService productAttributeService) {
         this.productAttributeService = productAttributeService;
     }
     @GetMapping("/getProductAttribute")
@@ -36,7 +36,7 @@ public class ProductAttributeController {
     }
 
     @DeleteMapping("/deleteProductAttributeById/{id}")
-    void deleteProductAttributeById (@PathVariable Integer id){ productAttributeService.deleteProductAttributeById(id);
+    void deleteProductAttributeById (@PathVariable final Integer id){ productAttributeService.deleteProductAttributeById(id);
     }
 }
 

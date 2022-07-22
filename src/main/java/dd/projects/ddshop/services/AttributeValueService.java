@@ -51,7 +51,7 @@ public class AttributeValueService {
         attributeValue.setValue(newAttributeValueDTO.getValue());
         attributeValueRepository.save(attributeValue);
     }
-    public void deleteAttributeValueById (int id) {
+    public void deleteAttributeValueById (final int id) {
         attributeValueRepository.deleteById(id);
     }
 }

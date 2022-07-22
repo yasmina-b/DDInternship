@@ -7,6 +7,7 @@ import org.mapstruct.ReportingPolicy;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
 public interface VariantMapper {
+
     VariantDTO toVariantDTO (Variant variant);
 
     Variant toVariant (VariantDTO variantDTO);

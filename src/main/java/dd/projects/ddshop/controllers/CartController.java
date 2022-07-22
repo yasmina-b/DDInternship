@@ -1,7 +1,6 @@
 package dd.projects.ddshop.controllers;
 
 import dd.projects.ddshop.dtos.CartDTO;
-import dd.projects.ddshop.entities.Cart;
 import dd.projects.ddshop.services.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +15,7 @@ public class CartController {
     private final CartService cartService;
 
     @Autowired
-    public CartController(CartService cartService) {
+    public CartController(final CartService cartService) {
         this.cartService = cartService;
     }
     @GetMapping("/getCart")
@@ -25,7 +24,7 @@ public class CartController {
     }
 
     @PostMapping("/createCart")
-    public ResponseEntity <Object> createCart(@RequestBody CartDTO cartDTO){
+    public ResponseEntity <Object> createCart(@RequestBody final CartDTO cartDTO){
         cartService.addCart(cartDTO);
         return new ResponseEntity<>("",HttpStatus.OK);
     }
@@ -37,7 +36,7 @@ public class CartController {
     }
 
     @DeleteMapping("/deleteCartById/{id}")
-    void deleteCartById (@PathVariable Integer id) {
+    void deleteCartById (@PathVariable final Integer id) {
         cartService.deleteCartById(id);
     }
 }

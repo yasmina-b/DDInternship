@@ -20,7 +20,7 @@ public class CartService {
     private final UserMapperImpl userMapper;
 
     @Autowired
-    public CartService (CartRepository cartRepository, CartMapperImpl cartMapper, UserMapperImpl userMapper){
+    public CartService (final CartRepository cartRepository, final CartMapperImpl cartMapper, final UserMapperImpl userMapper){
         this.cartRepository = cartRepository;
         this.cartMapper = cartMapper;
         this.userMapper = userMapper;
@@ -36,7 +36,7 @@ public class CartService {
 //        cartRepository.save(cart);
 //    }
 
-    public void addCart (CartDTO cartDTO) { cartRepository.save(cartMapper.toCart(cartDTO));
+    public void addCart (final CartDTO cartDTO) { cartRepository.save(cartMapper.toCart(cartDTO));
     }
 
     public List<CartDTO> getCart() {
@@ -55,7 +55,7 @@ public class CartService {
         cart.setTotalPrice(newCart.getTotalPrice());
         cartRepository.save(cart);
     }
-    public void deleteCartById (int id) {
+    public void deleteCartById (final int id) {
         cartRepository.deleteById(id);
     }
 }

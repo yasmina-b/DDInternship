@@ -15,7 +15,7 @@ public class AddressController {
     private final AddressService addressService;
 
     @Autowired
-    public AddressController(AddressService addressService) {
+    public AddressController(final AddressService addressService) {
         this.addressService = addressService;
     }
     @GetMapping("/getAddress")
@@ -23,7 +23,7 @@ public class AddressController {
         return new ResponseEntity<>(addressService.getAddress(), HttpStatus.OK);
     }
     @PostMapping("/createAddress")
-    public ResponseEntity <Object> createAddress(@RequestBody AddressDTO addressDTO){
+    public ResponseEntity <Object> createAddress(@RequestBody final AddressDTO addressDTO){
         addressService.createAddress(addressDTO);
         return new ResponseEntity<>("",HttpStatus.OK);
     }
@@ -33,7 +33,7 @@ public class AddressController {
         return new ResponseEntity<>("",HttpStatus.OK);
     }
     @DeleteMapping("/deleteAddressById/{id}")
-    void deleteAddressById (@PathVariable Integer id) {
+    void deleteAddressById (@PathVariable final Integer id) {
         addressService.deleteAddressById(id);
     }
 

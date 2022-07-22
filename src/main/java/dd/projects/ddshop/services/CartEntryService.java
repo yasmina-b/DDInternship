@@ -16,7 +16,7 @@ public class CartEntryService {
 
     private final CartEntryMapperImpl cartEntryMapper;
     @Autowired
-    public CartEntryService (CartEntryRepository cartEntryRepository, CartEntryMapperImpl cartEntryMapper){
+    public CartEntryService (final CartEntryRepository cartEntryRepository, final CartEntryMapperImpl cartEntryMapper){
        this.cartEntryRepository = cartEntryRepository;
        this.cartEntryMapper = cartEntryMapper;
     }
@@ -31,7 +31,7 @@ public class CartEntryService {
         return cartEntry;
 
     }
-    public void createCartEntry (CartEntryDTO cartEntryDTO,Variant variant, Cart cart) {
+    public void createCartEntry (final CartEntryDTO cartEntryDTO,final Variant variant, final Cart cart) {
         CartEntry cartEntry = getCartEntryFromDTO(cartEntryDTO,variant,cart);
         cartEntryRepository.save(cartEntry);
     }
@@ -49,7 +49,7 @@ public class CartEntryService {
         cartEntry.setTotalPricePerEntry(newCartEntryDTO.getTotalPricePerEntry());
         cartEntryRepository.save(cartEntry);
     }
-    public void deleteCartEntryById (int id) {
+    public void deleteCartEntryById (final int id) {
         cartEntryRepository.deleteById(id);
     }
 

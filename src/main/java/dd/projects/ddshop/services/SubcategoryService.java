@@ -6,6 +6,7 @@ import dd.projects.ddshop.entities.Subcategory;
 import dd.projects.ddshop.mappers.SubcategoryMapperImpl;
 import dd.projects.ddshop.repositories.CategoryRepository;
 import dd.projects.ddshop.repositories.SubcategoryRepository;
+import dd.projects.ddshop.validations.SubcategoryValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -21,14 +22,18 @@ public class SubcategoryService {
 
     private final SubcategoryMapperImpl subcategoryMapper;
 
+    private final SubcategoryValidation subcategoryValidation;
+
     @Autowired
-    public SubcategoryService (SubcategoryRepository subcategoryRepository, CategoryRepository categoryRepository, SubcategoryMapperImpl subcategoryMapper){
+    public SubcategoryService (final SubcategoryRepository subcategoryRepository, final CategoryRepository categoryRepository, final SubcategoryMapperImpl subcategoryMapper){
         this.subcategoryRepository = subcategoryRepository;
         this.categoryRepository = categoryRepository;
         this.subcategoryMapper = subcategoryMapper;
+        this.subcategoryValidation = new SubcategoryValidation(subcategoryRepository);
     }
 
     public void createSubcategory (final String name, final int id) {
+        subcategoryValidation.subcategoryValidation(name);
         final Category category = categoryRepository.getReferenceById(id);
         final Subcategory subcategory = new Subcategory(name,category);
         subcategoryRepository.save(subcategory);
@@ -46,7 +51,7 @@ public class SubcategoryService {
         subcategory.setName(newSubcategoryDTO.getName());
         subcategoryRepository.save(subcategory);
     }
-    public void deleteSubcategoryById (int id) {
+    public void deleteSubcategoryById (final int id) {
         subcategoryRepository.deleteById(id);
     }
 }

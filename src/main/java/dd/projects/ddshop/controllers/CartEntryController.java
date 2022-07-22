@@ -25,7 +25,7 @@ public class CartEntryController {
     private final CartMapperImpl cartMapper;
 
     @Autowired
-    public CartEntryController (CartEntryService cartEntryService, VariantService variantService, CartService cartService, VariantMapperImpl variantMapper, CartMapperImpl cartMapper) {
+    public CartEntryController (final CartEntryService cartEntryService, final VariantService variantService, final CartService cartService, final VariantMapperImpl variantMapper, final CartMapperImpl cartMapper) {
         this.cartEntryService = cartEntryService;
         this.variantService = variantService;
         this.cartService = cartService;
@@ -39,7 +39,7 @@ public class CartEntryController {
     }
 
     @PostMapping("/createCartEntry")
-    public ResponseEntity <Object> createCartEntry (@RequestBody CartEntryDTO cartEntryDTO){
+    public ResponseEntity <Object> createCartEntry (@RequestBody final CartEntryDTO cartEntryDTO){
         Variant variant = variantService.readVariant(variantMapper.toVariant(cartEntryDTO.getVariantId()).getId());
         Cart cart = cartService.readCart(cartMapper.toCart(cartEntryDTO.getCartId()).getId());
         cartEntryService.createCartEntry(cartEntryDTO,variant,cart);
@@ -53,7 +53,7 @@ public class CartEntryController {
     }
 
     @DeleteMapping("/deleteCartEntryById/{id}")
-    void deleteCartEntryById (@PathVariable Integer id) {
+    void deleteCartEntryById (@PathVariable final Integer id) {
         cartEntryService.deleteCartEntryById(id);
     }
 }

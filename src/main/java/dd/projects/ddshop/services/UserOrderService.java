@@ -12,10 +12,10 @@ public class UserOrderService {
     private final UserOrderRepository userOrderRepository;
 
     @Autowired
-    public UserOrderService (UserOrderRepository userOrderRepository){
+    public UserOrderService (final UserOrderRepository userOrderRepository){
         this.userOrderRepository = userOrderRepository;
     }
-    public void createUserOrder (UserOrder userOrder) {
+    public void createUserOrder (final UserOrder userOrder) {
         userOrderRepository.save(userOrder);
     }
 
@@ -30,7 +30,7 @@ public class UserOrderService {
         order.setPaymentType(newOrder.getPaymentType());
         userOrderRepository.save(order);
     }
-    public void deleteUserOrderById (int id) {
+    public void deleteUserOrderById (final int id) {
         userOrderRepository.deleteById(id);
     }
 }
