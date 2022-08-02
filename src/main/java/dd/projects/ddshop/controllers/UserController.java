@@ -2,6 +2,8 @@ package dd.projects.ddshop.controllers;
 
 import dd.projects.ddshop.dtos.UserCreationDTO;
 import dd.projects.ddshop.dtos.UserDTO;
+import dd.projects.ddshop.dtos.UserLoginDTO;
+import dd.projects.ddshop.dtos.UserRoleDTO;
 import dd.projects.ddshop.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,6 +32,11 @@ public class UserController {
     public ResponseEntity <Object> createUser (@RequestBody final UserCreationDTO userCreationDTO){
         userService.createUser(userCreationDTO);
         return new ResponseEntity<>("",HttpStatus.OK);
+    }
+
+    @PostMapping("/loginUser")
+    public ResponseEntity<UserRoleDTO> userLogin (@RequestBody final UserLoginDTO userLoginDTO) {
+        return new ResponseEntity<>(userService.userLogin(userLoginDTO),HttpStatus.OK);
     }
 
     @PutMapping("/updateUser/{id}")
