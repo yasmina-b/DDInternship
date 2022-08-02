@@ -1,5 +1,6 @@
 package dd.projects.ddshop.entities;
 
+import dd.projects.ddshop.enums.Role;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,6 +29,9 @@ public class User {
 
     @Column(name = "password", length = 256, nullable = false)
     public String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @OneToOne
     @JoinColumn(name = "default_delivery_address")

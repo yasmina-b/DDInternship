@@ -2,8 +2,11 @@ package dd.projects.ddshop.services;
 
 import dd.projects.ddshop.dtos.UserCreationDTO;
 import dd.projects.ddshop.dtos.UserDTO;
+import dd.projects.ddshop.dtos.UserLoginDTO;
+import dd.projects.ddshop.dtos.UserRoleDTO;
 import dd.projects.ddshop.entities.User;
-import dd.projects.ddshop.mappers.UserCreationMapperImpl;
+import dd.projects.ddshop.enums.Role;
+import dd.projects.ddshop.exceptions.IncorrectInput;
 import dd.projects.ddshop.mappers.UserMapperImpl;
 import dd.projects.ddshop.utils.Password;
 import dd.projects.ddshop.validations.UserValidation;
@@ -19,16 +22,13 @@ import static java.util.stream.Collectors.toList;
 public class UserService {
     private final UserRepository userRepository;
 
-    private final UserCreationMapperImpl userCreationMapper;
-
     private final UserMapperImpl userMapper;
 
     private final UserValidation userValidation;
 
     @Autowired
-    public UserService (final UserRepository userRepository, final UserCreationMapperImpl userCreationMapper, final UserMapperImpl userMapper) {
+    public UserService (final UserRepository userRepository, final UserMapperImpl userMapper) {
         this.userRepository = userRepository;
-        this.userCreationMapper = userCreationMapper;
         this.userMapper = userMapper;
         this.userValidation = new UserValidation(userRepository);
     }
@@ -36,6 +36,7 @@ public class UserService {
         userValidation.userValidation(userCreationDTO);
         final User user = userMapper.toUser(userCreationDTO);
         user.setPassword(Password.getMD5EncryptedValue(user.getPassword()));
+        user.setRole(Role.normalUser);
         userRepository.save(user);
     }
     public List<UserDTO> getUsers() {
@@ -55,6 +56,17 @@ public class UserService {
     }
     public void deleteUserById (final int id) {
         userRepository.deleteById(id);
+    }
+
+    public UserRoleDTO userLogin (final UserLoginDTO userLoginDTO) {
+
+        final User user = userRepository.findByEmail(userLoginDTO.getEmail());
+        if(user==null){
+            throw new IncorrectInput("This account does not exist");
+        }
+        if(!user.getPassword().equals(Password.getMD5EncryptedValue(userLoginDTO.getPassword())))
+            throw new IncorrectInput("ERROR: Incorrect password");
+        return new UserRoleDTO(user.getId(),user.getFirstName(),user.getLastName(),user.getEmail(),user.getPhoneNumber(),user.getRole().name());
     }
 
 }
